@@ -29,7 +29,7 @@ namespace BestPractiesDdd.Domain.Domains.Articles
 
 
         public Article(
-            [NotNull] Guid id,
+            [NotNull] Guid id, //Use a service to create GUID's
             [NotNull] Guid userId,
             [NotNull] string title,
             string text)
@@ -46,8 +46,9 @@ namespace BestPractiesDdd.Domain.Domains.Articles
         private Article() { }
 
 
-        public void SetText(string text)
+        public void SetText([NotNull]string text)
         {
+            Text = text;
             //TODO:: Write CHECK.
             //Text = String.NotNullOrWhiteSpace(value: text, nameof(text));
         }
