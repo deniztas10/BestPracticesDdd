@@ -11,5 +11,7 @@ namespace BestPractiesDdd.Domain.Domains.Articles
 
         Task Update(Article article);
 
+        Task<List<Article>> GetArticles();
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BestPractiesDdd.Domain.Domains.Articles;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,14 +9,31 @@ namespace BestPractiesDdd.Infrastructure.EntityFrameworkCore.Articles
 {
     public class EfCoreArticleRepository : IArticleRepository
     {
-        public Task<Article> Get(Guid id)
+
+        private readonly EfCoreDbContext _dbContext;
+        public EfCoreArticleRepository(EfCoreDbContext dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
         }
 
-        public Task Update(Article article)
+
+
+        public async Task<Article> Get(Guid id)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Articles.FirstOrDefaultAsync(x=>x.Id == id);
         }
+
+        public async Task Update(Article article)
+        {
+            _dbContext.Articles.Update(article);
+           await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<Article>> GetArticles()
+        {
+            return await _dbContext.Articles.ToListAsync();
+        }
+
+
     }
 }
